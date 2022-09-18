@@ -1,0 +1,192 @@
+class PointsTable
+{
+String TeamName;
+int TeamPoints;
+ArrayList<String> WL = new ArrayList<>(5);
+
+PointsTable(String name, int TeamPoints, ArrayList<String> WL)
+{
+super();
+this.TeamName = TeamName;
+this.TeamPoints = TeamPoints;
+this.WL = WL;
+}
+}
+
+public class Demo
+{
+ public static ArrayList<String> CTL(ArrayList<PointsTable> stats) 
+ {
+	 ArrayList<String> R1 = new ArrayList<>();
+	 for(int i =0; i<stats.size(); i++)
+	 {
+		 ArrayList<Character> R2 = stats.get(i).WL;
+		 for(int j=0;j<R2.size()-1;j++)
+		 {
+			 if(R2.get(j)=='L' && R2.get(j+1)=='L')
+			 {
+				 R1.add(stats.get(i).TeamName);
+				 break;
+			 }
+		 }
+	 }
+	 return R1;
+ }
+ public static ArrayList<String> ConsecutiveNWinsLosses(ArrayList<PointsTable> stats, int x, char c)
+ {
+ ArrayList<String> R1 = new ArrayList<>();
+	for(int i=0;i<stats.size();i++)
+	{
+		ArrayList<Character> R2 = stats.get(i).WL;
+		for(int j=0;j<R2.size()-x+1;j++)
+		{
+			boolean flag = true;
+			for(int k=j;k<j+x;k++)
+			{
+				if(R2.get(k)!=c)
+				{
+					flag = false;
+					break;
+				}
+			}
+			if(flag==true)
+			{
+				R1.add(stats.get(i).TeamName);
+				break;
+			}
+		}
+	}
+	return R1;
+ }
+ public static float average(HashMap<String, Integer>Hm, ArrayList<String> TeamsConsecutiveN)
+ {
+	 float avg = 0.0f;
+	 for(int i =0; i<TeamsConsecutiveN.size(); i++)
+	 {
+		 String TeamNameC = TeamsConsecutiveN.get(i);
+		 if(Hm.containsKey(TeamNameC)==true)
+		 {
+			 avg = avg+Hm.get(TeamNameC);
+		 }
+	 }
+	 return avg/TeamsConsecutiveN.size();
+ }
+ public static void main(String[] args) 
+ {
+	 ArrayList<PointsTable> stats = new ArrayList<>();
+	 	    ArrayList<Character> O1 = new ArrayList<>();
+	 	    O1.add('W');
+	 	    O1.add('W');
+	 	    O1.add('L');
+	 	    O1.add('L');
+	 	    O1.add('W');
+	 	    PointsTable Obj1 = new PointsTable("GT",20, O1);
+	 	    stats.add(Obj1);
+		
+	 	    ArrayList<Character> O2 = new ArrayList<>();
+		    O2.add('W');
+			O2.add('L');
+			O2.add('L');
+			O2.add('W');
+			O2.add('W');
+			PointsTable Obj2 = new PointsTable("LSG",18, O2);
+			stats.add(Obj2);
+			
+			ArrayList<Character> O3 = new ArrayList<>();
+		    O3.add('W');
+			O3.add('L');
+			O3.add('W');
+			O3.add('L');
+			O3.add('L');
+			PointsTable Obj3 = new PointsTable("RR",16, O3);
+			stats.add(Obj3);
+	
+			ArrayList<Character> O4 = new ArrayList<>();
+		    O4.add('W');
+			O4.add('W');
+			O4.add('L');
+			O4.add('W');
+			O4.add('L');
+			PointsTable Obj4 = new PointsTable("DC",16, O3);
+			stats.add(Obj4);
+			
+			ArrayList<Character> O5 = new ArrayList<>();
+			O5.add('L');
+			O5.add('W');
+			O5.add('W');
+			O5.add('L');
+			O5.add('L');
+			PointsTable Obj5 = new PointsTable("RCB",14, O5);
+			stats.add(Obj5);
+			
+			ArrayList<Character> O6 = new ArrayList<>();
+			O6.add('L');
+			O6.add('W');
+			O6.add('W');
+			O6.add('L');
+			O6.add('W');
+			PointsTable Obj6 = new PointsTable("KKR",12, O6);
+			stats.add(Obj6);
+			
+			ArrayList<Character> O7 = new ArrayList<>();
+			O7.add('L');
+			O7.add('W');
+			O7.add('L');
+			O7.add('W');
+			O7.add('L');
+			PointsTable Obj7 = new PointsTable("PBKS",12, O7);
+			stats.add(Obj7);
+			
+			ArrayList<Character> O8 = new ArrayList<>();
+			O8.add('W');
+			O8.add('L');
+			O8.add('L');
+			O8.add('L');
+			O8.add('L');
+			PointsTable Obj8 = new PointsTable("SRH",12, O8);
+			stats.add(Obj8);
+			
+			ArrayList<Character> O9 = new ArrayList<>();
+			O9.add('L');
+			O9.add('L');
+			O9.add('W');
+			O9.add('L');
+			O9.add('W');
+			PointsTable Obj9 = new PointsTable("CSK",8, O9);
+			stats.add(Obj9);
+			
+			ArrayList<Character> O10 = new ArrayList<>();
+			O10.add('L');
+			O10.add('W');
+			O10.add('L');
+			O10.add('W');
+			O10.add('W');
+			PointsTable Obj10 = new PointsTable("MI",6, O10);
+			stats.add(Obj10);
+			
+			ArrayList<String> TeamNamesconsecutive2Loss = CTL(stats);
+			System.out.println("IPL team with Two Consecutive Losses "+TeamNamesconsecutive2Loss.toString());
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.println("Enter L for Lossing and W For Winning");
+			Character c = sc.next().charAt(0);
+			
+			System.out.println("Enter the consecutive times :");
+			int x = sc.nextInt();
+			
+			ArrayList<String> TeamsConsecutiveN =ConsecutiveNWinsLosses(stats, x, c);
+			System.out.println(TeamsConsecutiveN.toString());
+			
+			HashMap<String,Integer> Hm = new HashMap<>();
+			for(int i=0;i<stats.size();i++)
+			{
+				String TeamName = stats.get(i).TeamName;
+				int TeamPoints = stats.get(i).TeamPoints;
+				Hm.put(TeamName, TeamPoints);
+			 }	
+				System.out.println("Teams = Points -- "+Hm.toString());
+				float avg = average(Hm,TeamsConsecutiveN);
+				System.out.println("Average Points of filtered teams - "+avg);
+
+}
+}
